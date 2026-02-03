@@ -20,15 +20,8 @@
     text-align: center;
     color: #fff;
   }
-  .header h1 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .header p {
-    font-size: 18px;
-    color: #a0a0b0;
-  }
+  .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 18px; color: #a0a0b0; }
   .dates-badge {
     display: inline-block;
     background: #2d2d44;
@@ -39,11 +32,7 @@
     font-size: 16px;
     color: #fff;
   }
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 32px 20px;
-  }
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
   .card {
     background: #fff;
     border-radius: 12px;
@@ -61,15 +50,13 @@
     align-items: center;
     gap: 10px;
   }
-  .card-title .emoji {
-    font-size: 24px;
-  }
+  .card-title .emoji { font-size: 24px; }
   
-  /* Map Styles */
+  /* Map */
   #map {
-    height: 350px;
+    height: 400px;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     border: 1px solid #e0e0e0;
   }
   .map-instruction {
@@ -78,47 +65,14 @@
     font-size: 14px;
     margin-bottom: 16px;
   }
-  .leaflet-popup-content-wrapper {
-    border-radius: 10px;
-    padding: 0;
-  }
-  .leaflet-popup-content {
-    margin: 0;
-    min-width: 280px;
-  }
-  .popup-card {
-    padding: 16px;
-  }
-  .popup-card .school-name {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    color: #1a1a2e;
-  }
-  .popup-card .school-location {
-    color: #666;
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
-  .popup-card .school-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-  .popup-card .stat-pill {
-    background: #f0f0f0;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    color: #555;
-  }
-  .popup-card .tour-info {
-    font-size: 13px;
-    color: #444;
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
+  .leaflet-popup-content-wrapper { border-radius: 10px; padding: 0; }
+  .leaflet-popup-content { margin: 0; min-width: 280px; }
+  .popup-card { padding: 16px; }
+  .popup-card .school-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: #1a1a2e; }
+  .popup-card .school-location { color: #666; font-size: 13px; margin-bottom: 10px; }
+  .popup-card .school-stats { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .popup-card .stat-pill { background: #f0f0f0; padding: 3px 8px; border-radius: 4px; font-size: 11px; color: #555; }
+  .popup-card .tour-info { font-size: 13px; color: #444; margin-bottom: 10px; line-height: 1.5; }
   .popup-card .tour-link {
     display: inline-block;
     padding: 8px 14px;
@@ -129,10 +83,18 @@
     font-size: 12px;
     font-weight: 600;
   }
-  .custom-marker {
+  .route-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
     background: #1a1a2e;
-    border: 3px solid #fff;
+    color: #fff;
     border-radius: 50%;
+    font-weight: 700;
+    font-size: 14px;
+    border: 3px solid #fff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
   .school-label {
@@ -145,9 +107,7 @@
     color: #1a1a2e;
     border-radius: 6px;
   }
-  .school-label::before {
-    border-right-color: #fff;
-  }
+  .school-label::before { border-right-color: #fff; }
   .tour-link {
     display: inline-block;
     margin-top: 10px;
@@ -159,44 +119,31 @@
     font-size: 13px;
     font-weight: 600;
   }
-  .tour-link:hover {
-    background: #2d2d44;
-  }
+  .tour-link:hover { background: #2d2d44; }
   
   /* Flights */
-  .flights-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
+  .flight-section { margin-bottom: 24px; }
+  .flight-section h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1a1a2e;
   }
+  .flights-table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .flights-table th {
     text-align: left;
-    padding: 12px;
+    padding: 10px 12px;
     background: #f8f9fa;
     font-weight: 600;
     color: #1a1a2e;
     border-bottom: 2px solid #e0e0e0;
   }
-  .flights-table td {
-    padding: 12px;
-    border-bottom: 1px solid #e8e8e8;
-  }
-  .flights-table tr:hover {
-    background: #fafafa;
-  }
-  .flights-table .airline {
-    font-weight: 600;
-  }
-  .flights-table .price {
-    font-weight: 700;
-    color: #1a1a2e;
-  }
-  .flights-table .recommended {
-    background: #f0fdf4;
-  }
-  .flights-table .recommended td:first-child::before {
-    content: "⭐ ";
-  }
+  .flights-table td { padding: 10px 12px; border-bottom: 1px solid #e8e8e8; }
+  .flights-table tr:hover { background: #fafafa; }
+  .flights-table .airline { font-weight: 600; }
+  .flights-table .price { font-weight: 700; color: #1a1a2e; }
+  .flights-table .recommended { background: #f0fdf4; }
+  .flights-table .recommended td:first-child::before { content: "⭐ "; }
   .badge-nonstop {
     display: inline-block;
     background: #dcfce7;
@@ -221,34 +168,14 @@
     padding: 16px;
     margin-top: 16px;
   }
-  .flight-totals h4 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #1a1a2e;
-  }
-  .flight-totals ul {
-    list-style: none;
-    font-size: 14px;
-  }
-  .flight-totals li {
-    padding: 4px 0;
-  }
-  .flight-totals .total-price {
-    font-weight: 700;
-  }
+  .flight-totals h4 { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #1a1a2e; }
+  .flight-totals ul { list-style: none; font-size: 14px; }
+  .flight-totals li { padding: 4px 0; }
+  .flight-totals .total-price { font-weight: 700; }
   
   /* Itinerary */
-  .day {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 24px;
-  }
-  .day-badge {
-    width: 100px;
-    flex-shrink: 0;
-    text-align: center;
-  }
+  .day { display: flex; gap: 20px; margin-bottom: 24px; }
+  .day-badge { width: 100px; flex-shrink: 0; text-align: center; }
   .day-num {
     background: #1a1a2e;
     color: #fff;
@@ -262,10 +189,7 @@
     font-weight: 700;
     margin: 0 auto 6px;
   }
-  .day-date {
-    font-size: 13px;
-    color: #666;
-  }
+  .day-date { font-size: 13px; color: #666; }
   .day-content {
     flex: 1;
     background: #f8f9fa;
@@ -273,12 +197,7 @@
     padding: 20px;
     border: 1px solid #e8e8e8;
   }
-  .day-title {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #1a1a2e;
-  }
+  .day-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #1a1a2e; }
   .event {
     background: #fff;
     padding: 12px;
@@ -300,51 +219,18 @@
     white-space: nowrap;
   }
   .event-desc { flex: 1; }
-  .event-title {
-    font-weight: 600;
-    margin-bottom: 2px;
-    font-size: 14px;
-  }
-  .event-note {
-    font-size: 13px;
-    color: #666;
-  }
+  .event-title { font-weight: 600; margin-bottom: 2px; font-size: 14px; }
+  .event-note { font-size: 13px; color: #666; }
   
   /* Hotels */
-  .hotels-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-  }
-  .hotel-card {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-  }
-  .hotel-name {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    color: #1a1a2e;
-  }
-  .hotel-location {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 12px;
-  }
-  .hotel-why {
-    background: #fff;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    border: 1px solid #e8e8e8;
-  }
+  .hotels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .hotel-card { background: #f8f9fa; border-radius: 10px; padding: 20px; border: 1px solid #e0e0e0; }
+  .hotel-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #1a1a2e; }
+  .hotel-location { font-size: 14px; color: #666; margin-bottom: 12px; }
+  .hotel-why { background: #fff; padding: 12px; border-radius: 8px; font-size: 14px; border: 1px solid #e8e8e8; }
   
   /* Tips */
-  .tips-list {
-    list-style: none;
-  }
+  .tips-list { list-style: none; }
   .tips-list li {
     background: #f8f9fa;
     padding: 14px;
@@ -356,10 +242,7 @@
     border: 1px solid #e8e8e8;
   }
   .tips-list li:last-child { margin-bottom: 0; }
-  .tip-emoji {
-    font-size: 20px;
-    flex-shrink: 0;
-  }
+  .tip-emoji { font-size: 20px; flex-shrink: 0; }
   .tip-text { font-size: 14px; }
   .tip-text strong { color: #1a1a2e; }
   
@@ -371,21 +254,9 @@
     text-align: center;
     color: #fff;
   }
-  .cta-box h3 {
-    font-size: 20px;
-    margin-bottom: 8px;
-  }
-  .cta-box p {
-    color: #a0a0b0;
-    margin-bottom: 20px;
-    font-size: 14px;
-  }
-  .cta-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
+  .cta-box h3 { font-size: 20px; margin-bottom: 8px; }
+  .cta-box p { color: #a0a0b0; margin-bottom: 20px; font-size: 14px; }
+  .cta-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
   .cta-links a {
     background: #fff;
     color: #1a1a2e;
@@ -395,53 +266,27 @@
     font-weight: 600;
     font-size: 14px;
   }
-  .cta-links a:hover {
-    background: #f0f0f0;
-  }
+  .cta-links a:hover { background: #f0f0f0; }
   
   .distance-note {
     background: #fffbeb;
     border-left: 3px solid #f59e0b;
     padding: 14px;
     border-radius: 0 8px 8px 0;
-    margin-top: 20px;
     font-size: 14px;
   }
   .distance-note strong { color: #92400e; }
-  .footer {
-    text-align: center;
-    padding: 32px;
-    color: #888;
-    font-size: 14px;
-  }
+  .footer { text-align: center; padding: 32px; color: #888; font-size: 14px; }
   a { color: #1a1a2e; }
-  .note {
-    margin-top: 16px;
-    color: #666;
-    font-size: 14px;
-  }
+  .note { margin-top: 16px; color: #666; font-size: 14px; }
   .note a { color: #1a1a2e; }
   
   @media (max-width: 600px) {
-    .day {
-      flex-direction: column;
-      gap: 12px;
-    }
-    .day-badge {
-      width: auto;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .day-num {
-      margin: 0;
-    }
-    .flights-table {
-      font-size: 12px;
-    }
-    .flights-table th, .flights-table td {
-      padding: 8px;
-    }
+    .day { flex-direction: column; gap: 12px; }
+    .day-badge { width: auto; display: flex; align-items: center; gap: 12px; }
+    .day-num { margin: 0; }
+    .flights-table { font-size: 12px; }
+    .flights-table th, .flights-table td { padding: 8px; }
   }
 </style>
 </head>
@@ -455,74 +300,113 @@
 
 <div class="container">
 
-  <!-- Schools with Map -->
+  <!-- Route Map -->
   <div class="card">
-    <div class="card-title"><span class="emoji">🏛️</span> The Schools</div>
-    <p class="map-instruction">Click a marker to see school details</p>
+    <div class="card-title"><span class="emoji">🗺️</span> The Route</div>
+    <p class="map-instruction">Click a marker to see details • Numbered stops show driving order</p>
     <div id="map"></div>
-    
     <div class="distance-note">
-      <strong>🚗 Driving Distances:</strong> Wake Forest → Elon: 46 mi (~50 min) &nbsp;|&nbsp; Elon → UNC: 30 mi (~35 min) &nbsp;|&nbsp; Wake Forest → UNC: 77 mi (~1h 15m)
+      <strong>🚗 Total Driving:</strong> RDU → Wake Forest (1h 20m) → Elon (50m) → UNC (35m) → RDU (25m) &nbsp;|&nbsp; ~3.5 hours total over 4 days
     </div>
   </div>
 
   <!-- Flight Options -->
   <div class="card">
-    <div class="card-title"><span class="emoji">✈️</span> Flight Options (LAX → RDU)</div>
+    <div class="card-title"><span class="emoji">✈️</span> Flights</div>
     
-    <table class="flights-table">
-      <thead>
-        <tr>
-          <th>Airline</th>
-          <th>Depart → Arrive</th>
-          <th>Duration</th>
-          <th>Stops</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="recommended">
-          <td class="airline">American</td>
-          <td>9:41a → 5:26p</td>
-          <td>4h 45m</td>
-          <td><span class="badge-nonstop">Nonstop</span></td>
-          <td class="price">$441</td>
-        </tr>
-        <tr>
-          <td class="airline">Delta</td>
-          <td>8:35a → 4:15p</td>
-          <td>4h 40m</td>
-          <td><span class="badge-nonstop">Nonstop</span></td>
-          <td class="price">$547</td>
-        </tr>
-        <tr>
-          <td class="airline">Southwest</td>
-          <td>1:25p → 10:25p</td>
-          <td>6h 0m</td>
-          <td><span class="badge-stop">1 stop</span></td>
-          <td class="price">$391</td>
-        </tr>
-        <tr>
-          <td class="airline">Frontier</td>
-          <td>6:15a → 5:48p</td>
-          <td>8h 33m</td>
-          <td><span class="badge-stop">1 stop</span></td>
-          <td class="price">$309</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="flight-section">
+      <h4>Outbound: LAX → RDU (Wed, Mar 12)</h4>
+      <table class="flights-table">
+        <thead>
+          <tr>
+            <th>Airline</th>
+            <th>Depart → Arrive</th>
+            <th>Duration</th>
+            <th>Stops</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="recommended">
+            <td class="airline">American</td>
+            <td>9:41a → 5:26p</td>
+            <td>4h 45m</td>
+            <td><span class="badge-nonstop">Nonstop</span></td>
+            <td class="price">$441</td>
+          </tr>
+          <tr>
+            <td class="airline">Delta</td>
+            <td>8:35a → 4:15p</td>
+            <td>4h 40m</td>
+            <td><span class="badge-nonstop">Nonstop</span></td>
+            <td class="price">$547</td>
+          </tr>
+          <tr>
+            <td class="airline">Southwest</td>
+            <td>1:25p → 10:25p</td>
+            <td>6h 0m</td>
+            <td><span class="badge-stop">1 stop</span></td>
+            <td class="price">$391</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flight-section">
+      <h4>Return: RDU → LAX (Sat, Mar 15) — After 3 PM</h4>
+      <table class="flights-table">
+        <thead>
+          <tr>
+            <th>Airline</th>
+            <th>Depart → Arrive</th>
+            <th>Duration</th>
+            <th>Stops</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="recommended">
+            <td class="airline">Delta</td>
+            <td>5:15p → 7:56p</td>
+            <td>5h 41m</td>
+            <td><span class="badge-nonstop">Nonstop</span></td>
+            <td class="price">$548</td>
+          </tr>
+          <tr>
+            <td class="airline">American</td>
+            <td>6:27p → 9:16p</td>
+            <td>5h 49m</td>
+            <td><span class="badge-nonstop">Nonstop</span></td>
+            <td class="price">$517</td>
+          </tr>
+          <tr>
+            <td class="airline">American</td>
+            <td>3:47p → 8:48p</td>
+            <td>8h 1m</td>
+            <td><span class="badge-stop">1 stop</span></td>
+            <td class="price">$527</td>
+          </tr>
+          <tr>
+            <td class="airline">Southwest</td>
+            <td>5:40p → 11:40p</td>
+            <td>9h 0m</td>
+            <td><span class="badge-stop">1 stop</span></td>
+            <td class="price">$424</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     
     <div class="flight-totals">
-      <h4>Total for 3 Passengers (roundtrip):</h4>
+      <h4>Estimated Total for 3 Passengers:</h4>
       <ul>
-        <li>⭐ American (nonstop): <span class="total-price">$1,323</span></li>
-        <li>Delta (nonstop): <span class="total-price">$1,641</span></li>
-        <li>Southwest (1 stop): <span class="total-price">$1,173</span></li>
-        <li>Frontier (1 stop): <span class="total-price">$927</span></li>
+        <li>⭐ American out + Delta return (both nonstop): <span class="total-price">~$2,967</span></li>
+        <li>Delta both ways (nonstop): <span class="total-price">~$3,285</span></li>
+        <li>Southwest both ways (1 stop): <span class="total-price">~$2,445</span></li>
       </ul>
     </div>
     
-    <p class="note">💡 Prices as of Feb 3, 2026. American nonstop recommended — arrives 5:26 PM, plenty of time to get to Winston-Salem. <a href="https://www.google.com/travel/flights?q=flights%20from%20LAX%20to%20RDU%20March%2012%202026%20return%20March%2015%202026" target="_blank">Search on Google Flights →</a></p>
+    <p class="note">💡 Prices as of Feb 3, 2026. <a href="https://www.google.com/travel/flights?q=flights%20from%20LAX%20to%20RDU%20March%2012%202026%20return%20March%2015%202026" target="_blank">Search on Google Flights →</a></p>
   </div>
 
   <!-- Suggested Itinerary -->
@@ -546,7 +430,7 @@
         <div class="event">
           <div class="event-time">6:00 PM</div>
           <div class="event-desc">
-            <div class="event-title">Pick up rental car</div>
+            <div class="event-title">Pick up rental car at RDU</div>
             <div class="event-note">Drive to Winston-Salem (~1 hr 20 min)</div>
           </div>
         </div>
@@ -665,17 +549,17 @@
           </div>
         </div>
         <div class="event">
-          <div class="event-time">11:00 AM</div>
+          <div class="event-time">2:30 PM</div>
           <div class="event-desc">
             <div class="event-title">Drive to RDU</div>
             <div class="event-note">~25 min from Chapel Hill. Return rental car.</div>
           </div>
         </div>
         <div class="event">
-          <div class="event-time">~2:00 PM</div>
+          <div class="event-time">5:15 PM</div>
           <div class="event-desc">
-            <div class="event-title">Depart RDU</div>
-            <div class="event-note">Afternoon flight to LAX (arrive ~4:30 PM PST)</div>
+            <div class="event-title">Depart RDU (Delta)</div>
+            <div class="event-note">Nonstop to LAX, arrive 7:56 PM PST</div>
           </div>
         </div>
       </div>
@@ -686,7 +570,6 @@
   <div class="card">
     <div class="card-title"><span class="emoji">🏨</span> Hotel Suggestions</div>
     <div class="hotels-grid">
-      
       <div class="hotel-card">
         <div class="hotel-name">Night 1: Winston-Salem</div>
         <div class="hotel-location">📍 Near Wake Forest / Downtown</div>
@@ -697,7 +580,6 @@
           • Marriott Winston-Salem — Reliable, good location
         </div>
       </div>
-
       <div class="hotel-card">
         <div class="hotel-name">Nights 2–3: Chapel Hill</div>
         <div class="hotel-location">📍 Near UNC / Franklin Street</div>
@@ -708,7 +590,6 @@
           • Aloft Chapel Hill — Modern, walkable
         </div>
       </div>
-
     </div>
     <p class="note">💡 The Carolina Inn is on UNC's campus — great for the full college experience. Book early!</p>
   </div>
@@ -763,84 +644,120 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// School data
-const schools = {
-  wake: {
+// Route stops in order
+const stops = [
+  {
+    num: 1,
+    name: "RDU Airport",
+    coords: [35.8776, -78.7875],
+    type: "airport",
+    info: "Arrive Wed 5:26 PM, Depart Sat 5:15 PM"
+  },
+  {
+    num: 2,
     name: "Wake Forest University",
     coords: [36.1339, -80.2769],
+    type: "school",
     color: "#9E7E38",
     location: "Winston-Salem, NC",
     stats: ["~5,500 undergrads", "Top 30 National", "340 acres"],
     tour: "90-minute student-led walking tour. Info sessions available on select dates.",
     link: "https://apply.admissions.wfu.edu/portal/campustours"
   },
-  elon: {
-    name: "Elon University", 
+  {
+    num: 3,
+    name: "Elon University",
     coords: [36.1027, -79.5032],
+    type: "school",
     color: "#6F263D",
     location: "Elon, NC",
     stats: ["~6,300 undergrads", "#1 Study Abroad", "636 acres"],
     tour: "30-min info session + 1.5 hour walking tour. Total ~2 hours.",
     link: "https://admissions.elon.edu/portal/campus-visit"
   },
-  unc: {
+  {
+    num: 4,
     name: "UNC Chapel Hill",
     coords: [35.9049, -79.0469],
+    type: "school",
     color: "#4B9CD3",
     location: "Chapel Hill, NC",
     stats: ["~20,000 undergrads", "#1 Public University", "729 acres"],
     tour: "2-hour experience with welcome session, student panel, and campus tour.",
     link: "https://mycarolina.unc.edu/portal/visit"
   }
-};
+];
 
 // Initialize map
-const map = L.map('map').setView([35.95, -79.65], 8);
+const map = L.map('map').setView([35.95, -79.5], 8);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; OpenStreetMap, &copy; CartoDB',
   maxZoom: 19
 }).addTo(map);
 
+// Draw route line
+const routeCoords = stops.map(s => s.coords);
+// Add return to airport
+routeCoords.push(stops[0].coords);
+
+L.polyline(routeCoords, {
+  color: '#1a1a2e',
+  weight: 3,
+  opacity: 0.6,
+  dashArray: '10, 10'
+}).addTo(map);
+
 // Add markers
-const markers = {};
-Object.keys(schools).forEach(key => {
-  const school = schools[key];
+stops.forEach(stop => {
+  const bgColor = stop.type === 'airport' ? '#1a1a2e' : stop.color;
   
   const icon = L.divIcon({
-    className: 'custom-marker',
-    html: `<div style="width:24px;height:24px;background:${school.color};border:3px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-    popupAnchor: [0, -12]
+    className: 'route-marker-container',
+    html: `<div class="route-marker" style="background:${bgColor};">${stop.num}</div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+    popupAnchor: [0, -14]
   });
   
-  const popupContent = `
-    <div class="popup-card">
-      <div class="school-name">${school.name}</div>
-      <div class="school-location">📍 ${school.location}</div>
-      <div class="school-stats">
-        ${school.stats.map(s => `<span class="stat-pill">${s}</span>`).join('')}
+  let popupContent;
+  if (stop.type === 'airport') {
+    popupContent = `
+      <div class="popup-card">
+        <div class="school-name">✈️ ${stop.name}</div>
+        <div class="tour-info">${stop.info}</div>
       </div>
-      <div class="tour-info"><strong>Tour:</strong> ${school.tour}</div>
-      <a href="${school.link}" target="_blank" class="tour-link">Book Tour →</a>
-    </div>
-  `;
+    `;
+  } else {
+    popupContent = `
+      <div class="popup-card">
+        <div class="school-name">${stop.name}</div>
+        <div class="school-location">📍 ${stop.location}</div>
+        <div class="school-stats">
+          ${stop.stats.map(s => `<span class="stat-pill">${s}</span>`).join('')}
+        </div>
+        <div class="tour-info"><strong>Tour:</strong> ${stop.tour}</div>
+        <a href="${stop.link}" target="_blank" class="tour-link">Book Tour →</a>
+      </div>
+    `;
+  }
   
-  markers[key] = L.marker(school.coords, { icon })
+  const marker = L.marker(stop.coords, { icon })
     .addTo(map)
-    .bindPopup(popupContent, { maxWidth: 300 })
-    .bindTooltip(school.name, { 
-      permanent: true, 
-      direction: 'right', 
-      offset: [12, 0],
-      className: 'school-label'
-    });
+    .bindPopup(popupContent, { maxWidth: 300 });
+  
+  // Add label
+  marker.bindTooltip(stop.name, { 
+    permanent: true, 
+    direction: 'right', 
+    offset: [14, 0],
+    className: 'school-label'
+  });
 });
 
-// Fit bounds to show all markers
-const bounds = L.latLngBounds(Object.values(schools).map(s => s.coords));
-map.fitBounds(bounds, { padding: [30, 30] });
+// Fit bounds
+const bounds = L.latLngBounds(stops.map(s => s.coords));
+map.fitBounds(bounds, { padding: [40, 40] });
 </script>
 
 </body>
