@@ -135,60 +135,18 @@
     border-radius: 50%;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
-  
-  /* School Cards (below map) */
-  .schools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-  }
-  .school-card {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    border-left: 4px solid;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .school-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  .school-card.wake { border-color: #9E7E38; }
-  .school-card.elon { border-color: #6F263D; }
-  .school-card.unc { border-color: #4B9CD3; }
-  .school-name {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 4px;
+  .school-label {
+    background: #fff;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    padding: 6px 10px;
+    font-size: 13px;
+    font-weight: 600;
     color: #1a1a2e;
-  }
-  .school-location {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
-  .school-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 12px;
-  }
-  .stat-pill {
-    background: #fff;
-    padding: 4px 10px;
     border-radius: 6px;
-    font-size: 12px;
-    color: #555;
-    border: 1px solid #e0e0e0;
   }
-  .school-tour {
-    background: #fff;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 12px;
-    font-size: 14px;
-    border: 1px solid #e8e8e8;
+  .school-label::before {
+    border-right-color: #fff;
   }
   .tour-link {
     display: inline-block;
@@ -503,35 +461,6 @@
     <p class="map-instruction">Click a marker to see school details</p>
     <div id="map"></div>
     
-    <div class="schools-grid">
-      <div class="school-card wake" onclick="panToSchool('wake')">
-        <div class="school-name">Wake Forest University</div>
-        <div class="school-location">📍 Winston-Salem, NC</div>
-        <div class="school-stats">
-          <span class="stat-pill">~5,500 undergrads</span>
-          <span class="stat-pill">Top 30 National</span>
-        </div>
-      </div>
-
-      <div class="school-card elon" onclick="panToSchool('elon')">
-        <div class="school-name">Elon University</div>
-        <div class="school-location">📍 Elon, NC</div>
-        <div class="school-stats">
-          <span class="stat-pill">~6,300 undergrads</span>
-          <span class="stat-pill">#1 Study Abroad</span>
-        </div>
-      </div>
-
-      <div class="school-card unc" onclick="panToSchool('unc')">
-        <div class="school-name">UNC Chapel Hill</div>
-        <div class="school-location">📍 Chapel Hill, NC</div>
-        <div class="school-stats">
-          <span class="stat-pill">~20,000 undergrads</span>
-          <span class="stat-pill">#1 Public University</span>
-        </div>
-      </div>
-    </div>
-
     <div class="distance-note">
       <strong>🚗 Driving Distances:</strong> Wake Forest → Elon: 46 mi (~50 min) &nbsp;|&nbsp; Elon → UNC: 30 mi (~35 min) &nbsp;|&nbsp; Wake Forest → UNC: 77 mi (~1h 15m)
     </div>
@@ -900,15 +829,14 @@ Object.keys(schools).forEach(key => {
   
   markers[key] = L.marker(school.coords, { icon })
     .addTo(map)
-    .bindPopup(popupContent, { maxWidth: 300 });
+    .bindPopup(popupContent, { maxWidth: 300 })
+    .bindTooltip(school.name, { 
+      permanent: true, 
+      direction: 'right', 
+      offset: [12, 0],
+      className: 'school-label'
+    });
 });
-
-// Pan to school when card clicked
-function panToSchool(key) {
-  const school = schools[key];
-  map.setView(school.coords, 12);
-  markers[key].openPopup();
-}
 
 // Fit bounds to show all markers
 const bounds = L.latLngBounds(Object.values(schools).map(s => s.coords));
