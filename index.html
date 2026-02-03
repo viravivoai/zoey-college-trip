@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gibbons Family NC College Tour</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -63,6 +64,79 @@
   .card-title .emoji {
     font-size: 24px;
   }
+  
+  /* Map Styles */
+  #map {
+    height: 350px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+  }
+  .map-instruction {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .leaflet-popup-content-wrapper {
+    border-radius: 10px;
+    padding: 0;
+  }
+  .leaflet-popup-content {
+    margin: 0;
+    min-width: 280px;
+  }
+  .popup-card {
+    padding: 16px;
+  }
+  .popup-card .school-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #1a1a2e;
+  }
+  .popup-card .school-location {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .popup-card .school-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .popup-card .stat-pill {
+    background: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #555;
+  }
+  .popup-card .tour-info {
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .popup-card .tour-link {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #1a1a2e;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .custom-marker {
+    background: #1a1a2e;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  
+  /* School Cards (below map) */
   .schools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -73,6 +147,12 @@
     border-radius: 10px;
     padding: 20px;
     border-left: 4px solid;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .school-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
   .school-card.wake { border-color: #9E7E38; }
   .school-card.elon { border-color: #6F263D; }
@@ -124,55 +204,83 @@
   .tour-link:hover {
     background: #2d2d44;
   }
-  .flight-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
+  
+  /* Flights */
+  .flights-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
   }
-  .flight-card {
+  .flights-table th {
+    text-align: left;
+    padding: 12px;
     background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    border: 1px solid #e0e0e0;
-  }
-  .flight-card.recommended {
-    border: 2px solid #1a1a2e;
-    background: #fff;
-  }
-  .rec-badge {
-    background: #1a1a2e;
-    color: #fff;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 11px;
     font-weight: 600;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 12px;
+    color: #1a1a2e;
+    border-bottom: 2px solid #e0e0e0;
   }
-  .airport-code {
-    font-size: 32px;
+  .flights-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .flights-table tr:hover {
+    background: #fafafa;
+  }
+  .flights-table .airline {
+    font-weight: 600;
+  }
+  .flights-table .price {
     font-weight: 700;
     color: #1a1a2e;
   }
-  .airport-name {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 16px;
+  .flights-table .recommended {
+    background: #f0fdf4;
   }
-  .flight-detail {
-    background: #fff;
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin: 6px 0;
-    font-size: 14px;
-    text-align: left;
-    border: 1px solid #e8e8e8;
+  .flights-table .recommended td:first-child::before {
+    content: "⭐ ";
   }
-  .flight-detail strong {
+  .badge-nonstop {
+    display: inline-block;
+    background: #dcfce7;
+    color: #166534;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-stop {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .flight-totals {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+  .flight-totals h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
     color: #1a1a2e;
   }
+  .flight-totals ul {
+    list-style: none;
+    font-size: 14px;
+  }
+  .flight-totals li {
+    padding: 4px 0;
+  }
+  .flight-totals .total-price {
+    font-weight: 700;
+  }
+  
+  /* Itinerary */
   .day {
     display: flex;
     gap: 20px;
@@ -243,6 +351,8 @@
     font-size: 13px;
     color: #666;
   }
+  
+  /* Hotels */
   .hotels-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -272,6 +382,8 @@
     font-size: 14px;
     border: 1px solid #e8e8e8;
   }
+  
+  /* Tips */
   .tips-list {
     list-style: none;
   }
@@ -292,22 +404,8 @@
   }
   .tip-text { font-size: 14px; }
   .tip-text strong { color: #1a1a2e; }
-  .map-section {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    border: 1px solid #e8e8e8;
-  }
-  .map-section h3 {
-    font-size: 16px;
-    margin-bottom: 16px;
-    color: #1a1a2e;
-  }
-  .map-embed {
-    border-radius: 8px;
-    overflow: hidden;
-  }
+  
+  /* CTA */
   .cta-box {
     background: #1a1a2e;
     border-radius: 10px;
@@ -342,6 +440,7 @@
   .cta-links a:hover {
     background: #f0f0f0;
   }
+  
   .distance-note {
     background: #fffbeb;
     border-left: 3px solid #f59e0b;
@@ -364,6 +463,28 @@
     font-size: 14px;
   }
   .note a { color: #1a1a2e; }
+  
+  @media (max-width: 600px) {
+    .day {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .day-badge {
+      width: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .day-num {
+      margin: 0;
+    }
+    .flights-table {
+      font-size: 12px;
+    }
+    .flights-table th, .flights-table td {
+      padding: 8px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -376,53 +497,39 @@
 
 <div class="container">
 
-  <!-- Schools Overview -->
+  <!-- Schools with Map -->
   <div class="card">
     <div class="card-title"><span class="emoji">🏛️</span> The Schools</div>
+    <p class="map-instruction">Click a marker to see school details</p>
+    <div id="map"></div>
+    
     <div class="schools-grid">
-      
-      <div class="school-card wake">
+      <div class="school-card wake" onclick="panToSchool('wake')">
         <div class="school-name">Wake Forest University</div>
         <div class="school-location">📍 Winston-Salem, NC</div>
         <div class="school-stats">
           <span class="stat-pill">~5,500 undergrads</span>
           <span class="stat-pill">Top 30 National</span>
-          <span class="stat-pill">340 acres</span>
-        </div>
-        <div class="school-tour">
-          <strong>Campus Tour:</strong> 90-minute student-led walking tour. Info sessions available on select dates.
-          <br><a href="https://apply.admissions.wfu.edu/portal/campustours" target="_blank" class="tour-link">Book Tour →</a>
         </div>
       </div>
 
-      <div class="school-card elon">
+      <div class="school-card elon" onclick="panToSchool('elon')">
         <div class="school-name">Elon University</div>
         <div class="school-location">📍 Elon, NC</div>
         <div class="school-stats">
           <span class="stat-pill">~6,300 undergrads</span>
           <span class="stat-pill">#1 Study Abroad</span>
-          <span class="stat-pill">636 acres</span>
-        </div>
-        <div class="school-tour">
-          <strong>Campus Tour:</strong> 30-min info session + 1.5 hour walking tour. Total ~2 hours.
-          <br><a href="https://admissions.elon.edu/portal/campus-visit" target="_blank" class="tour-link">Book Tour →</a>
         </div>
       </div>
 
-      <div class="school-card unc">
+      <div class="school-card unc" onclick="panToSchool('unc')">
         <div class="school-name">UNC Chapel Hill</div>
         <div class="school-location">📍 Chapel Hill, NC</div>
         <div class="school-stats">
           <span class="stat-pill">~20,000 undergrads</span>
           <span class="stat-pill">#1 Public University</span>
-          <span class="stat-pill">729 acres</span>
-        </div>
-        <div class="school-tour">
-          <strong>Campus Tour:</strong> 2-hour experience with welcome session, student panel, and campus tour.
-          <br><a href="https://mycarolina.unc.edu/portal/visit" target="_blank" class="tour-link">Book Tour →</a>
         </div>
       </div>
-
     </div>
 
     <div class="distance-note">
@@ -432,28 +539,61 @@
 
   <!-- Flight Options -->
   <div class="card">
-    <div class="card-title"><span class="emoji">✈️</span> Flight Options from LAX</div>
-    <div class="flight-options">
-      
-      <div class="flight-card recommended">
-        <div class="rec-badge">Recommended</div>
-        <div class="airport-code">RDU</div>
-        <div class="airport-name">Raleigh-Durham International</div>
-        <div class="flight-detail"><strong>Airlines:</strong> Delta, American (nonstop)</div>
-        <div class="flight-detail"><strong>Flight time:</strong> ~5 hours</div>
-        <div class="flight-detail"><strong>To UNC:</strong> 25 min &nbsp;|&nbsp; <strong>To Wake:</strong> 1h 20m</div>
-      </div>
-
-      <div class="flight-card">
-        <div class="airport-code">CLT</div>
-        <div class="airport-name">Charlotte Douglas International</div>
-        <div class="flight-detail"><strong>Airlines:</strong> American (nonstop, major hub)</div>
-        <div class="flight-detail"><strong>Flight time:</strong> ~4.5 hours</div>
-        <div class="flight-detail"><strong>To schools:</strong> 1.5–2 hr drive to all three</div>
-      </div>
-
+    <div class="card-title"><span class="emoji">✈️</span> Flight Options (LAX → RDU)</div>
+    
+    <table class="flights-table">
+      <thead>
+        <tr>
+          <th>Airline</th>
+          <th>Depart → Arrive</th>
+          <th>Duration</th>
+          <th>Stops</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="recommended">
+          <td class="airline">American</td>
+          <td>9:41a → 5:26p</td>
+          <td>4h 45m</td>
+          <td><span class="badge-nonstop">Nonstop</span></td>
+          <td class="price">$441</td>
+        </tr>
+        <tr>
+          <td class="airline">Delta</td>
+          <td>8:35a → 4:15p</td>
+          <td>4h 40m</td>
+          <td><span class="badge-nonstop">Nonstop</span></td>
+          <td class="price">$547</td>
+        </tr>
+        <tr>
+          <td class="airline">Southwest</td>
+          <td>1:25p → 10:25p</td>
+          <td>6h 0m</td>
+          <td><span class="badge-stop">1 stop</span></td>
+          <td class="price">$391</td>
+        </tr>
+        <tr>
+          <td class="airline">Frontier</td>
+          <td>6:15a → 5:48p</td>
+          <td>8h 33m</td>
+          <td><span class="badge-stop">1 stop</span></td>
+          <td class="price">$309</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="flight-totals">
+      <h4>Total for 3 Passengers (roundtrip):</h4>
+      <ul>
+        <li>⭐ American (nonstop): <span class="total-price">$1,323</span></li>
+        <li>Delta (nonstop): <span class="total-price">$1,641</span></li>
+        <li>Southwest (1 stop): <span class="total-price">$1,173</span></li>
+        <li>Frontier (1 stop): <span class="total-price">$927</span></li>
+      </ul>
     </div>
-    <p class="note">💡 Compare prices on <a href="https://www.google.com/travel/flights" target="_blank">Google Flights</a> for March 12–15. RDU is better positioned; CLT may have better prices.</p>
+    
+    <p class="note">💡 Prices as of Feb 3, 2026. American nonstop recommended — arrives 5:26 PM, plenty of time to get to Winston-Salem. <a href="https://www.google.com/travel/flights?q=flights%20from%20LAX%20to%20RDU%20March%2012%202026%20return%20March%2015%202026" target="_blank">Search on Google Flights →</a></p>
   </div>
 
   <!-- Suggested Itinerary -->
@@ -468,31 +608,24 @@
       <div class="day-content">
         <div class="day-title">Travel Day + Winston-Salem</div>
         <div class="event">
-          <div class="event-time">6:00 AM</div>
+          <div class="event-time">9:41 AM</div>
           <div class="event-desc">
-            <div class="event-title">Depart LAX</div>
-            <div class="event-note">Morning flight to RDU (arrive ~2:00 PM local)</div>
+            <div class="event-title">Depart LAX (American)</div>
+            <div class="event-note">Nonstop to RDU, arrive 5:26 PM local</div>
           </div>
         </div>
         <div class="event">
-          <div class="event-time">2:30 PM</div>
+          <div class="event-time">6:00 PM</div>
           <div class="event-desc">
             <div class="event-title">Pick up rental car</div>
             <div class="event-note">Drive to Winston-Salem (~1 hr 20 min)</div>
           </div>
         </div>
         <div class="event">
-          <div class="event-time">4:30 PM</div>
+          <div class="event-time">7:30 PM</div>
           <div class="event-desc">
-            <div class="event-title">Explore Winston-Salem</div>
-            <div class="event-note">Check into hotel, walk around downtown, early dinner</div>
-          </div>
-        </div>
-        <div class="event">
-          <div class="event-time">Evening</div>
-          <div class="event-desc">
-            <div class="event-title">Optional: Drive by Wake Forest</div>
-            <div class="event-note">Get the lay of the land before tomorrow's tour</div>
+            <div class="event-title">Arrive Winston-Salem</div>
+            <div class="event-note">Check into hotel, grab dinner downtown</div>
           </div>
         </div>
       </div>
@@ -651,16 +784,6 @@
     <p class="note">💡 The Carolina Inn is on UNC's campus — great for the full college experience. Book early!</p>
   </div>
 
-  <!-- Map -->
-  <div class="card">
-    <div class="map-section">
-      <h3>🗺️ The Route</h3>
-      <div class="map-embed">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d828687.0785557!2d-80.40825!3d35.95!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e0!4m5!1s0x88532b4edb4a4ef3%3A0x52e631f24cb9fddc!2sRaleigh-Durham%20International%20Airport%2C%20Morrisville%2C%20NC!3m2!1d35.8776!2d-78.7875!4m5!1s0x88530dd21fb9dbbb%3A0x3c8c4ea33ee8ecb!2sWake%20Forest%20University%2C%20Winston-Salem%2C%20NC!3m2!1d36.1339!2d-80.2769!4m5!1s0x88531e7c8a8a3c67%3A0x6c8e2e2d50e8c6ec!2sElon%20University%2C%20Elon%2C%20NC!3m2!1d36.1027!2d-79.5032!4m5!1s0x89acc2e05c5e5555%3A0x5c1f9d5b5b5b5b5b!2sUNC%20Chapel%20Hill%2C%20Chapel%20Hill%2C%20NC!3m2!1d35.9049!2d-79.0469!4m5!1s0x88532b4edb4a4ef3%3A0x52e631f24cb9fddc!2sRaleigh-Durham%20International%20Airport!3m2!1d35.8776!2d-78.7875!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-      </div>
-    </div>
-  </div>
-
   <!-- Tips -->
   <div class="card">
     <div class="card-title"><span class="emoji">💡</span> Pro Tips</div>
@@ -697,7 +820,7 @@
         <a href="https://apply.admissions.wfu.edu/portal/campustours" target="_blank">Wake Forest</a>
         <a href="https://admissions.elon.edu/portal/campus-visit" target="_blank">Elon</a>
         <a href="https://mycarolina.unc.edu/portal/visit" target="_blank">UNC</a>
-        <a href="https://www.google.com/travel/flights" target="_blank">Flights</a>
+        <a href="https://www.google.com/travel/flights?q=flights%20from%20LAX%20to%20RDU%20March%2012%202026%20return%20March%2015%202026" target="_blank">Book Flights</a>
       </div>
     </div>
   </div>
@@ -708,6 +831,89 @@
   Made with ❤️ for the Gibbons family college adventure<br>
   <small>Last updated: February 2026</small>
 </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// School data
+const schools = {
+  wake: {
+    name: "Wake Forest University",
+    coords: [36.1339, -80.2769],
+    color: "#9E7E38",
+    location: "Winston-Salem, NC",
+    stats: ["~5,500 undergrads", "Top 30 National", "340 acres"],
+    tour: "90-minute student-led walking tour. Info sessions available on select dates.",
+    link: "https://apply.admissions.wfu.edu/portal/campustours"
+  },
+  elon: {
+    name: "Elon University", 
+    coords: [36.1027, -79.5032],
+    color: "#6F263D",
+    location: "Elon, NC",
+    stats: ["~6,300 undergrads", "#1 Study Abroad", "636 acres"],
+    tour: "30-min info session + 1.5 hour walking tour. Total ~2 hours.",
+    link: "https://admissions.elon.edu/portal/campus-visit"
+  },
+  unc: {
+    name: "UNC Chapel Hill",
+    coords: [35.9049, -79.0469],
+    color: "#4B9CD3",
+    location: "Chapel Hill, NC",
+    stats: ["~20,000 undergrads", "#1 Public University", "729 acres"],
+    tour: "2-hour experience with welcome session, student panel, and campus tour.",
+    link: "https://mycarolina.unc.edu/portal/visit"
+  }
+};
+
+// Initialize map
+const map = L.map('map').setView([35.95, -79.65], 8);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap, &copy; CartoDB',
+  maxZoom: 19
+}).addTo(map);
+
+// Add markers
+const markers = {};
+Object.keys(schools).forEach(key => {
+  const school = schools[key];
+  
+  const icon = L.divIcon({
+    className: 'custom-marker',
+    html: `<div style="width:24px;height:24px;background:${school.color};border:3px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, -12]
+  });
+  
+  const popupContent = `
+    <div class="popup-card">
+      <div class="school-name">${school.name}</div>
+      <div class="school-location">📍 ${school.location}</div>
+      <div class="school-stats">
+        ${school.stats.map(s => `<span class="stat-pill">${s}</span>`).join('')}
+      </div>
+      <div class="tour-info"><strong>Tour:</strong> ${school.tour}</div>
+      <a href="${school.link}" target="_blank" class="tour-link">Book Tour →</a>
+    </div>
+  `;
+  
+  markers[key] = L.marker(school.coords, { icon })
+    .addTo(map)
+    .bindPopup(popupContent, { maxWidth: 300 });
+});
+
+// Pan to school when card clicked
+function panToSchool(key) {
+  const school = schools[key];
+  map.setView(school.coords, 12);
+  markers[key].openPopup();
+}
+
+// Fit bounds to show all markers
+const bounds = L.latLngBounds(Object.values(schools).map(s => s.coords));
+map.fitBounds(bounds, { padding: [30, 30] });
+</script>
 
 </body>
 </html>
