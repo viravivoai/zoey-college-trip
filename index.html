@@ -8,13 +8,14 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
   :root {
-    --coral: #D4727A;
-    --coral-light: #E8989E;
-    --blush: #F8C8CB;
-    --blush-light: #FDF0F1;
-    --sage: #8BB8A8;
-    --sage-light: #D4E8E0;
-    --cream: #FFFAF8;
+    --coral: #E07B4C;
+    --coral-light: #EDA07A;
+    --blush: #F5DCC8;
+    --blush-light: #FDF6F0;
+    --sage: #7CB87C;
+    --sage-light: #D4E8D4;
+    --sky: #D6E6F2;
+    --cream: #FFFDFB;
     --charcoal: #2D2D2D;
     --gray: #6B6B6B;
   }
@@ -28,97 +29,21 @@
   
   /* Hero Section with Illustration */
   .hero {
-    background: linear-gradient(180deg, var(--blush-light) 0%, var(--cream) 100%);
-    padding: 40px 20px 60px;
+    background: var(--cream);
+    padding: 0 20px 40px;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
   .hero-illustration {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 20px;
-    margin-bottom: 24px;
-    height: 140px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 20px;
   }
-  /* Cute flat illustration buildings */
-  .building {
-    border-radius: 8px 8px 0 0;
-    position: relative;
-  }
-  .building-1 {
-    width: 50px;
-    height: 90px;
-    background: var(--sage);
-  }
-  .building-1::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 25px solid transparent;
-    border-right: 25px solid transparent;
-    border-bottom: 20px solid var(--sage);
-  }
-  .building-2 {
-    width: 70px;
-    height: 120px;
-    background: var(--coral);
-  }
-  .building-2::before {
-    content: '🎓';
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 32px;
-  }
-  .building-2::after {
-    content: '';
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 30px;
-    background: var(--cream);
-    border-radius: 10px 10px 0 0;
-  }
-  .building-3 {
-    width: 55px;
-    height: 80px;
-    background: var(--blush);
-  }
-  .building-3::before {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 20px;
-    background: var(--cream);
-    border-radius: 4px;
-  }
-  .plane {
-    position: absolute;
-    top: 30px;
-    right: 15%;
-    font-size: 32px;
-    animation: fly 6s ease-in-out infinite;
-  }
-  @keyframes fly {
-    0%, 100% { transform: translateY(0) rotate(-10deg); }
-    50% { transform: translateY(-10px) rotate(-10deg); }
-  }
-  .clouds {
-    position: absolute;
-    top: 20px;
-    left: 10%;
-    font-size: 28px;
-    opacity: 0.6;
+  .hero-illustration img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
   .hero h1 {
     font-size: 28px;
@@ -384,12 +309,8 @@
 <body>
 
 <div class="hero">
-  <div class="clouds">☁️ ☁️</div>
-  <div class="plane">✈️</div>
   <div class="hero-illustration">
-    <div class="building building-1"></div>
-    <div class="building building-2"></div>
-    <div class="building building-3"></div>
+    <img src="8747.jpg" alt="College campus illustration">
   </div>
   <h1>The Gibbons Family College Tour</h1>
   <p>Miles, Melinda & Zoey explore North Carolina</p>
