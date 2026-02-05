@@ -610,9 +610,67 @@ const stops = [
 const map = L.map('map').setView([35.95, -79.5], 8);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '©OpenStreetMap, ©CartoDB', maxZoom: 19 }).addTo(map);
 
-const routeCoords = stops.map(s => s.coords);
-routeCoords.push(stops[0].coords);
-L.polyline(routeCoords, { color: '#D4727A', weight: 3, opacity: 0.5, dashArray: '8, 8' }).addTo(map);
+// Decode OSRM polyline (Google's encoded polyline algorithm)
+function decodePolyline(encoded) {
+  const coords = [];
+  let index = 0, lat = 0, lng = 0;
+  while (index < encoded.length) {
+    let b, shift = 0, result = 0;
+    do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5; } while (b >= 0x20);
+    lat += (result & 1) ? ~(result >> 1) : (result >> 1);
+    shift = 0; result = 0;
+    do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5; } while (b >= 0x20);
+    lng += (result & 1) ? ~(result >> 1) : (result >> 1);
+    coords.push([lat / 1e5, lng / 1e5]);
+  }
+  return coords;
+}
+
+// Fetch driving route from OSRM (free OpenStreetMap routing)
+async function fetchDrivingRoute(waypoints) {
+  const coordsStr = waypoints.map(p => `${p[1]},${p[0]}`).join(';');
+  const url = `https://router.project-osrm.org/route/v1/driving/${coordsStr}?overview=full&geometries=polyline`;
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.code === 'Ok' && data.routes[0]) {
+      return decodePolyline(data.routes[0].geometry);
+    }
+  } catch (e) { console.error('Route fetch error:', e); }
+  return null;
+}
+
+// Draw fallback straight lines (dashed, in case routing fails)
+function drawFallbackRoute() {
+  const routeCoords = stops.map(s => s.coords);
+  routeCoords.push(stops[0].coords);
+  L.polyline(routeCoords, { color: '#D4727A', weight: 3, opacity: 0.4, dashArray: '8, 8' }).addTo(map);
+}
+
+// Draw actual driving routes
+async function drawDrivingRoutes() {
+  const allWaypoints = stops.map(s => s.coords);
+  allWaypoints.push(stops[0].coords); // Return to RDU
+  
+  const routeCoords = await fetchDrivingRoute(allWaypoints);
+  
+  if (routeCoords) {
+    // Draw the actual highway route
+    L.polyline(routeCoords, { 
+      color: '#D4727A', 
+      weight: 4, 
+      opacity: 0.7,
+      lineJoin: 'round',
+      lineCap: 'round'
+    }).addTo(map);
+  } else {
+    // Fallback to straight lines if routing fails
+    drawFallbackRoute();
+  }
+}
+
+// Initialize driving routes
+drawDrivingRoutes();
 
 stops.forEach(stop => {
   const bgColor = stop.type === 'airport' ? '#2D2D2D' : stop.color;
